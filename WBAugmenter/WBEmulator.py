@@ -19,12 +19,21 @@ import random as rnd
 import os
 import shutil
 
+
 class WBEmulator:
     def __init__(self):
-        self.features = np.load('params/features.npy') # training encoded features
-        self.mappingFuncs = np.load('params/mappingFuncs.npy') # mapping functions to emulate WB effects
-        self.encoderWeights = np.load('params/encoderWeights.npy') # weight matrix for histogram encoding
-        self.encoderBias = np.load('params/encoderBias.npy') # bias vector for histogram encoding
+
+        try:
+            self.features = np.load('params/features.npy') # training encoded features
+            self.mappingFuncs = np.load('params/mappingFuncs.npy') # mapping functions to emulate WB effects
+            self.encoderWeights = np.load('params/encoderWeights.npy') # weight matrix for histogram encoding
+            self.encoderBias = np.load('params/encoderBias.npy') # bias vector for histogram encoding
+        except Exception as e:
+            self.features = np.load('WB_color_augmenter/params/features.npy') # training encoded features
+            self.mappingFuncs = np.load('WB_color_augmenter/params/mappingFuncs.npy') # mapping functions to emulate WB effects
+            self.encoderWeights = np.load('WB_color_augmenter/params/encoderWeights.npy') # weight matrix for histogram encoding
+            self.encoderBias = np.load('WB_color_augmenter/params/encoderBias.npy') # bias vector for histogram encoding
+
         self.h = 60 # histogram bin width
         self.K = 25 # K value for nearest neighbor searching
         self.sigma = 0.25 # fall off factor for KNN
